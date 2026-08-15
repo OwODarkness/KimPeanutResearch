@@ -4,6 +4,8 @@
 >
 > **Read papers. Understand methods. Work with code. Run experiments. Build knowledge. Let an agent drive the research loop.**
 
+## Introduction
+
 KimPeanut Research is a desktop application designed for computer science research. Its long-term goal is to provide an agent that can progressively drive a research task—from discovering and reading literature, to analyzing methods, working with code, running experiments, and maintaining a traceable research knowledge base.
 
 The project starts with a simpler and more immediately useful foundation: a **Research Library** and **Paper Analysis System**. The agent is built on top of these capabilities rather than being tightly coupled to them.
