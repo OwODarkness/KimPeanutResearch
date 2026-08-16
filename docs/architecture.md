@@ -65,6 +65,26 @@ Every derived record should retain its source paper and the best available
 location reference. Generated output also records the parser or model version
 that produced it.
 
+### Deterministic paper-field extraction
+
+The paper extraction tool is a pure Rust capability that accepts parsed,
+page-oriented text from an interchangeable PDF/OCR adapter. The adapter must
+preserve reading blocks or layout regions for multi-column documents; flattened
+page text can interleave independent columns and is therefore not reliable
+input. A request selects the desired fields (`Metadata`, `Abstract`, or explicit
+`ContributionStatements`) in one pass over that representation; it does not
+read files, invoke a model, or persist records. Each returned value includes
+page and byte-range provenance plus parser and extractor identifiers. Import
+workflows can request a standard field set, while a user action can request one
+field only. Explicit contribution text is extracted as source statements, never
+silently rewritten into a generated summary.
+
+DOI discovery is part of local parsing: parser adapters retain DOI candidates
+from PDF/XMP metadata, visible front matter, and embedded DOI links. Optional
+Crossref, OpenAlex, or publisher lookup is a separate network-capable metadata
+enrichment service, with provider provenance and no silent overwrites of local
+or user-corrected facts.
+
 ## Agent boundary
 
 The future agent is a client of the core, not a privileged owner of it:

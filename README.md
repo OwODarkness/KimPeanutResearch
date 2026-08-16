@@ -10,6 +10,25 @@ KimPeanut Research is a desktop application designed for computer science resear
 
 The project starts with a simpler and more immediately useful foundation: a **Research Library** and **Paper Analysis System**. The agent is built on top of these capabilities rather than being tightly coupled to them.
 
+## Backend storage configuration
+
+The research-library data root is configured in Rust at
+[`src-tauri/src/backend_config.rs`](src-tauri/src/backend_config.rs), not in
+`tauri.conf.json`. Use `BackendConfig::new(data_dir)` at backend startup; it
+derives `library.db`, `papers/`, and `.staging/` from that directory and records
+storage-layout version `1`.
+
+```rust
+let config = BackendConfig::new("D:/KimPeanutResearch-data");
+```
+
+Tauri/project configuration remains in
+[`src-tauri/tauri.conf.json`](src-tauri/tauri.conf.json). At startup, the
+backend resolves the platform application-data directory and loads any custom
+location from a separate local backend-settings file. Changing the location in
+Settings copies managed library files to an empty target folder and retains the
+previous location as recovery fallback.
+
 ## Vision
 
 Research should be a continuous loop rather than a collection of disconnected chat sessions:
@@ -446,6 +465,24 @@ This makes it possible to replace or upgrade models, agent frameworks, and exter
 Early architecture / initial development.
 
 The first target is a practical paper management and paper analysis system. Autonomous research is the long-term goal, but the library should remain independently useful throughout development.
+
+## Agent Design References
+
+KimPeanut Research learns from these projects' architecture and engineering
+practices, while keeping its implementation local-first, Rust-owned, and
+independent of their code and frameworks:
+
+- [LangGraph](https://github.com/langchain-ai/langgraph) — durable, resumable
+  stateful workflows and human interruption points.
+- [PydanticAI](https://github.com/pydantic/pydantic-ai) — typed, validated tool
+  contracts and structured outputs.
+- [smolagents](https://github.com/huggingface/smolagents) — a small, readable
+  agent core with sandboxing treated as a separate concern.
+- [OpenHands](https://github.com/OpenHands/OpenHands) — explicit execution
+  environment boundaries and the security implications of agent access.
+
+See [Agent Design References](docs/agent_reference/README.md) for the complete
+KimPeanut-specific analysis and implementation constraints.
 
 ## License
 

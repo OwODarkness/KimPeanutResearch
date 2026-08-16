@@ -1,0 +1,4 @@
+interface:
+  display_name: "KimPeanut Frontend"
+  short_description: "Preserve clean modern research UI conventions"
+  default_prompt: "Use $kimpeanut-frontend when designing or updating the KimPeanut Research Vue frontend."
